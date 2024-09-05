@@ -33,7 +33,7 @@ class DataTransformation:
             ]
             numerical_pipeline = Pipeline(
                 steps= [
-                    ('imputer',SimpleImputer(statergy = 'median')),
+                    ('imputer',SimpleImputer(strategy= 'median')),
                     ('scaler',StandardScaler())
                 ]
             )     
@@ -76,10 +76,10 @@ class DataTransformation:
             ]
 
             input_feature_train_df = train_df.drop(columns = [target_column_name],axis = 1)
-            target_feature_train_df = train_df.target_column_name
+            target_feature_train_df = train_df[target_column_name]
 
             input_feature_test_df = test_df.drop(columns = [target_column_name],axis = 1)
-            target_feature_test_df = test_df.target_column_name
+            target_feature_test_df = test_df[target_column_name]
             
             logging.info(
                 f'Applying preprocessing object on training dataframe and testing dataframe'
@@ -108,8 +108,5 @@ class DataTransformation:
                 self.data_transformation_config.preprocessor_obj_file_path
             )
 
-        except:
-            pass
-
-    if __name__ == '__main__':
-        print("working")
+        except Exception as e:
+            raise CustomException(e,sys)
